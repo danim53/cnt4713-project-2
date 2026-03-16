@@ -5,13 +5,13 @@ DNS Iterative Lookup Client
 
 A simple DNS lookup client that performs iterative DNS resolution using UDP socket programming in Python.
 
-📋 Project Overview
+# 📋 Project Overview
 
 This project implements a command-line DNS client written in Python 3. The program starts with a root DNS server and follows referrals to intermediate DNS servers until it finds the IPv4 address (A record) for the requested domain.
 
 The DNS query messages are built manually and sent using UDP sockets, without using any existing DNS libraries.
 
-⭐ Key Features
+# ⭐ Key Features
 
 UDP socket communication
 
@@ -27,7 +27,7 @@ Displays intermediate DNS server replies
 
 Stops once the final IP address is found
 
-🛠️ Technical Requirements
+# 🛠️ Technical Requirements
 Language
 
 Python 3
@@ -40,7 +40,7 @@ No external DNS libraries allowed
 
 Program name must be exactly mydns
 
-🏗️ Program Architecture
+# 🏗️ Program Architecture
 
 The DNS client follows the iterative DNS lookup process:
 
@@ -66,7 +66,7 @@ Client → Authoritative DNS Server
 ↳ returns final A record
 Client prints final IP address
 
-🚀 Usage
+# 🚀 Usage
 Starting the Program
 
 Run the program from the command line:
@@ -87,7 +87,7 @@ A list of root DNS servers can be found here:
 
 https://www.iana.org/domains/root/servers
 
-📝 DNS Records Used
+# 📝 DNS Records Used
 A Record
 
 Contains the IPv4 address for the domain being queried.
@@ -106,7 +106,7 @@ Authority Section → intermediate name servers
 
 Additional Section → IP addresses of those servers
 
-🧪 Testing
+# 🧪 Testing
 Example Test
 
 python3 mydns.py cs.fiu.edu 202.12.27.33
@@ -117,7 +117,7 @@ nslookup cs.fiu.edu 8.8.8.8
 
 The IP address returned by nslookup should match the result from the program.
 
-📊 Grading Breakdown
+# 📊 Grading Breakdown
 Component	Weight
 Send query to root DNS server	15%
 Receive reply from root DNS server	15%
@@ -129,7 +129,7 @@ Display IPs for queried domain name	15%
 
 Total: 100%
 
-📦 Files Included
+# 📦 Files Included
 
 mydns.py – DNS lookup client implementation
 
@@ -137,7 +137,7 @@ README.txt – Member names and IDs,
 Language used (Python3),
 Compiling instructions (command-line only, not IDE-specific)
 
-🔗 Resources
+# 🔗 Resources
 
 RFC 1035 – DNS Message Format
 https://www.ietf.org/rfc/rfc1035.txt
@@ -145,14 +145,14 @@ https://www.ietf.org/rfc/rfc1035.txt
 Root DNS Servers
 https://www.iana.org/domains/root/servers
 
-👤 Authors
+# 👤 Authors
 
 Danielle Martin
 Khalil Peguero Goris
 Migdony Romero
 Xavier Wlliams
 
-🎓 Course Information
+# 🎓 Course Information
 
 Course: CNT 4713
 Project: DNS Iterative Lookup Client
