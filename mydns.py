@@ -37,12 +37,13 @@ def main():
     # Later steps:
     # 1. Build DNS query packet
     # 2. Send query to root DNS server
+    def send_query(query, root_dns_ip):
+        sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+        print("Sending query to root DNS server: ", root_dns_ip)
+        sock.sendto(query, (root_dns_ip, DNS_PORT))
     # 3. Receive response
-    sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-    sock.sendto(query, (root_dns_ip, DNS_PORT))
-    data, addr = sock.recvfrom(1024)
-    print("Received message from DNS server: ", data.decode())
-    sock.close()
+    data, server = sock.recvfrom(1024)
+    print("Received response from root DNS server: ", data)
     # 4. Parse response
     # 5. Continue iteratively until A record is found
 
