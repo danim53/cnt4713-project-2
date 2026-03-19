@@ -26,22 +26,22 @@ def build_query(domain):
     #Transaction ID
     query += random.randint(0, 65535).to_bytes(2, "big")
     #flags
-    query += b"\x00\x00"
+    query += (0).to_bytes(2, "big")
     #question count
-    query += b"\x00\x01"
+    query += (1).to_bytes(2, "big")
     #answer count
-    query += b"\x00\x00"
+    query += (0).to_bytes(2, "big")
     #ns count
-    query += b"\x00\x00"
+    query += (0).to_bytes(2, "big")
     #ar count
-    query += b"\x00\x00"
+    query += (0).to_bytes(2, "big")
 
     #question selection
     query += encode_domain(domain)
     #question type is A
-    query += b"\x00\x01"
+    query += (1).to_bytes(2, "big")
     #question class = in
-    query += b"\x00\x01"
+    query += (1).to_bytes(2, "big")
 
     return query
 
