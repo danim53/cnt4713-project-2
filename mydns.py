@@ -47,15 +47,29 @@ def build_query(domain):
 
     # Send query to root DNS server
 def send_query(sock, query, server_ip):
-    print("Sending query to root DNS server: ", server_ip)
     sock.sendto(query, (server_ip, DNS_PORT))
 
 # Receive response from DNS server
 def receive_response(sock):
     data, server = sock.recvfrom(1024)
-    print("Received response from root DNS server: ", server[0])
-    print("Response size: ", len(data), "bytes")
-    return data
+    return data, server
+
+def parse_header(response):
+    #Extract count (first 12 bytes) from DNS header
+
+    #bytes 6-7 (num of answers)
+    anscount = int.from_bytes(response[6:8], "big")
+
+    #bytes 8-9 (num of NS authority records)
+    nscount = int.from_bytes(response[8:10], "big")
+
+    #bytes 10-11 (num of additional records)
+    addcount = int.from_bytes(response[10:12], "big")
+
+    print("Reply received. Content overview: ")
+    print(str(anscount) + " Answers.")
+    print(str(nscount) + " Intermediate Name Servers.")
+    print(str(addcount) + " Additional Information Records.")
 
 def main():
     if len(sys.argv) != 3:
@@ -65,10 +79,6 @@ def main():
     domain_name = sys.argv[1]
     root_dns_ip = sys.argv[2]
 
-    print("Domain Name: ", domain_name)
-    print("Root DNS IP: ", root_dns_ip)
-    print("DNS Port: ", DNS_PORT)
-
     # create UDP socket
     sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
     sock.settimeout(5)
@@ -76,22 +86,26 @@ def main():
     print("Socket created successfully")
 
     query = build_query(domain_name)
-    print("DNS query built successfully")
+
+    print("----------------------------------------------------------------")
+    print("DNS server to query: ", root_dns_ip)
 
     try:
         send_query(sock, query, root_dns_ip)
-        response = receive_response(sock)
+        response, server = receive_response(sock)
 
-    #Later steps
-    #1. Parse DNS header
-    #2. Print answer/authority/additional counts
-    #3. Parse NS and A records
-    #4. Pick next DNS server
-    #5. Repeat until final A record is found
+        parse_header(response)
+        print("Query packet was built and sent successfully.")
+    # Later steps:
+    # read Authority section (NS records)
+    # read Additional section (A records)
+    # match NS → IP
+    # Pick next server
+    # Repeat until A record is found
 
     except socket.timeout:
         print("ERROR: DNS query timed out")
-
+    print("----------------------------------------------------------------")
     sock.close()
 
 if __name__ == "__main__":
