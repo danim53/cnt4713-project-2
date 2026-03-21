@@ -121,6 +121,7 @@ def main():
 
     # Iterative lookup loop
     while True:
+        print("----------------------------------------------------------------")
         print(f"DNS server to query: {current_dns_ip}")
         query = build_query(domain_name)
         
